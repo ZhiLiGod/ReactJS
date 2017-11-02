@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloWorld</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="js/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+    <script type="text/babel">
+        var styles = {
+            color: 'red',
+            border: '1px #000 solid'
+        };
+        var HelloWorld = React.createClass({
+            getInitialState: function(){
+                console.log('State');
+                return null;
+            },
+            getDefaultProps: function(){
+                console.log('default props')
+            },
+            componentWillMount: function(){
+                console.log('Mount')
+            },
+            handleChange: function(name, event){
+                var newState = {};
+                newState[name] = name == 'checkbox' ? event.target.checked : event.target.value;
+                this.setState(newState);
+            },
+            render: function(){
+                return(
+                    <div style={styles}>
+                        <b><p >Hello, world {this.props.name ? this.props.name : 'Kevin'}</p></b>
+                        <ul>
+                            <li key='1'>1</li>
+                            <li key='2'>2</li>
+                            <li key='3'>3</li>
+                        </ul>
+                        //函数复用
+                        <input type='text' onChange={this.handleChange.bind(this, 'checkbox')} />
+                    </div>
+                );
+            }
+        });
+        ReactDOM.render(
+            <HelloWorld name=''/>,
+            document.body
+        );
+    </script>
+
+
+</body>
+</html>

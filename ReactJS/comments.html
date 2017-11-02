@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="js/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+<script type="text/babel">
+    var Content = React.createClass({
+        getInitialState: function(){
+            return{
+                inputText: "",
+            }
+        },
+        handleChange: function(evt){
+            this.setState({
+                inputText: evt.target.value
+            })
+        },
+        handleSubmit: function(){
+            console.log("reply To: " + this.props.selectName);
+            console.log(this.state.inputText);
+        },
+        render: function(){
+            return (
+                <div>
+                    <textarea onChange={this.handleChange} placeholder="please enter somthing..." />
+                    <br/>
+                    <button onClick={this.handleSubmit} >Submit</button>
+                </div>
+            );
+        }
+    });
+    var Comment = React.createClass({
+        getInitialState: function(){
+            return{
+                names: ["Tim", "John", "Hank"],
+                selectName: '',
+                x: 0,
+                y: 0
+            }
+        },
+        handleSelect: function(evt){
+            this.setState({
+                selectName: evt.target.value
+            });
+        },
+        handleMouseMove: function(evt){
+            this.setState({
+                x: evt.clientX,
+                y: evt.clientY
+            })
+        },
+        render: function(){
+            var options = [];
+            for(var option in this.state.names){
+                options.push(<option value={this.state.names[option]}>{this.state.names[option]}</option>)
+            }
+            return (
+                <div onMouseMove={this.handleMouseMove}>
+                    {this.state.x + ', ' + this.state.y }
+                    <select onChange={this.handleSelect}>
+                        {options}
+                    </select>
+                    <Content selectName={this.state.selectName}/>
+                </div>
+            );
+        }
+    });
+    ReactDOM.render(
+        <Comment/>,
+        document.body
+    );
+</script>
+</body>
+</html>
